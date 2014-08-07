@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Parallax</title>
+</head>
+<style>
+    html,body{
+        padding: 0;
+        margin: 0;
+        height: 100%;
+        -webkit-transform-style:preserve-3d;
+        -moz-transform-style:preserve-3d;
+        -ms-transform-style:preserve-3d;
+        transform-style:preserve-3d;
+        background: #333;
+    }
+    div,p,span{
+        padding: 0;
+        margin: 0;
+    }
+.parallax_main{
+    width: 760px;
+    height: 3750px;
+    position: relative;
+    background: #cc0;
+    overflow: hidden;
+    background: url(bg.png) no-repeat;
+    margin: 0 auto;
+}
+.parallax_part {
+    width: 100%;
+    height: 1000px;
+
+}
+    .parallax_main span{
+        display: block;
+        position: absolute;
+    }
+.box_4s .phone {
+    width: 134px;
+    height: 149px;
+    background: url(4s.png) 0px 0px no-repeat;
+}
+.box_4s .score {
+    width: 145px;
+    height: 149px;
+    background: url(4s.png) -236px 0px no-repeat;
+}
+.box_4s .rank{
+    width: 145px;
+    height: 149px;
+    background: url(4s.png) -452px 0px no-repeat;
+}
+
+    .box_one .phone {
+        width: 154px;
+        height: 165px;
+        background: url(one.png) 0px 0px no-repeat;
+    }
+    .box_one .score {
+        width: 130px;
+        height: 165px;
+        background: url(one.png) -246px 0px no-repeat;
+    }
+    .box_one .rank{
+        width: 145px;
+        height: 165px;
+        background: url(one.png) -462px 0px no-repeat;
+    }
+
+    .box_mz .phone {
+        width: 170px;
+        height: 169px;
+        background: url(mz.png) 0px 0px no-repeat;
+    }
+    .box_mz .score {
+        width: 159px;
+        height: 169px;
+        background: url(mz.png) -254px 0px no-repeat;
+    }
+    .box_mz .rank{
+        width: 145px;
+        height: 169px;
+        background: url(mz.png) -470px 0px no-repeat;
+    }
+
+    .box_mi .phone {
+        width: 131px;
+        height: 166px;
+        background: url(mi.png) 0px 0px no-repeat;
+    }
+    .box_mi .score {
+        width: 144px;
+        height: 166px;
+        background: url(mi.png) -234px 0px no-repeat;
+    }
+    .box_mi .rank{
+        width: 145px;
+        height: 166px;
+        background: url(mi.png) -448px 0px no-repeat;
+    }
+
+    .box_n5 .phone {
+        width: 178px;
+        height: 173px;
+        background: url(n5.png) 0px 0px no-repeat;
+    }
+    .box_n5 .score {
+        width: 144px;
+        height: 173px;
+        background: url(n5.png) -259px 0px no-repeat;
+    }
+    .box_n5 .rank{
+        width: 145px;
+        height: 173px;
+        background: url(n5.png) -473px 0px no-repeat;
+    }
+
+    .box_s5 .phone {
+        width: 178px;
+        height: 184px;
+        background: url(s5.png) 0px 0px no-repeat;
+    }
+    .box_s5 .score {
+        width: 144px;
+        height: 184px;
+        background: url(s5.png) -259px 0px no-repeat;
+    }
+    .box_s5 .rank{
+        width: 145px;
+        height: 184px;
+        background: url(s5.png) -473px 0px no-repeat;
+    }
+
+    .box_5c .phone {
+        width: 162px;
+        height: 186px;
+        background: url(5c.png) 0px 0px no-repeat;
+    }
+    .box_5c .score {
+        width: 146px;
+        height: 186px;
+        background: url(5c.png) -250px 0px no-repeat;
+    }
+    .box_5c .rank{
+        width: 145px;
+        height: 186px;
+        background: url(5c.png) -470px 0px no-repeat;
+    }
+
+    .box_z1 .phone {
+        width: 210px;
+        height: 225px;
+        background: url(z1.png) 0px 0px no-repeat;
+    }
+    .box_z1 .score {
+        width: 150px;
+        height: 225px;
+        background: url(z1.png) -265px 0px no-repeat;
+    }
+    .box_z1 .rank{
+        width: 145px;
+        height: 225px;
+        background: url(z1.png) -485px 0px no-repeat;
+    }
+
+    .box_5s .phone {
+        width: 250px;
+        height: 228px;
+        background: url(5s.png) 0px 0px no-repeat;
+    }
+    .box_5s .score {
+        width: 150px;
+        height: 228px;
+        background: url(5s.png) -294px 0px no-repeat;
+    }
+    .box_5s .rank{
+        width: 145px;
+        height: 228px;
+        background: url(5s.png) -510px 0px no-repeat;
+    }
+
+    .box_x .phone {
+        width: 265px;
+        height: 234px;
+        background: url(x.png) 0px 0px no-repeat;
+    }
+    .box_x .score {
+        width: 170px;
+        height: 234px;
+        background: url(x.png) -300px 0px no-repeat;
+    }
+    .box_x .rank{
+        width: 145px;
+        height: 234px;
+        background: url(x.png) -520px 0px no-repeat;
+    }
+
+</style>
+<body>
+    <div class="parallax_main">
+        <div class="box_4s">
+            <span class="phone" data-startx="95" data-starty="770" data-stopx="95" data-stopy="570" data-startTiming="0" data-stopTiming="150" data-effect="fadein"></span>
+            <span class="score" data-startx="95" data-starty="570" data-stopx="326" data-stopy="570" data-startTiming="150" data-stopTiming="250" data-effect="fadein"></span>
+            <span class="rank" data-startx="760" data-starty="370" data-stopx="550" data-stopy="570" data-startTiming="250" data-stopTiming="400" data-effect="fadein"></span>
+        </div>
+        <div class="box_one">
+            <span class="phone" data-startx="85" data-starty="1000" data-stopx="85" data-stopy="800" data-startTiming="200" data-stopTiming="350" data-effect="fadein"></span>
+            <span class="score" data-startx="85" data-starty="800" data-stopx="326" data-stopy="800" data-startTiming="350" data-stopTiming="450" data-effect="fadein"></span>
+            <span class="rank" data-startx="760" data-starty="600" data-stopx="550" data-stopy="800" data-startTiming="450" data-stopTiming="600" data-effect="fadein"></span>
+        </div>
+        <div class="box_mz">
+            <span class="phone" data-startx="75" data-starty="1260" data-stopx="75" data-stopy="1060" data-startTiming="400" data-stopTiming="550" data-effect="fadein"></span>
+            <span class="score" data-startx="75" data-starty="1060" data-stopx="330" data-stopy="1060" data-startTiming="550" data-stopTiming="650" data-effect="fadein"></span>
+            <span class="rank" data-startx="760" data-starty="800" data-stopx="550" data-stopy="1060" data-startTiming="650" data-stopTiming="800" data-effect="fadein"></span>
+        </div>
+        <div class="box_mi">
+            <span class="phone" data-startx="98" data-starty="1500" data-stopx="98" data-stopy="1300" data-startTiming="600" data-stopTiming="750" data-effect="fadein"></span>
+            <span class="score" data-startx="98" data-starty="1300" data-stopx="330" data-stopy="1300" data-startTiming="750" data-stopTiming="850" data-effect="fadein"></span>
+            <span class="rank" data-startx="760" data-starty="1000" data-stopx="550" data-stopy="1300" data-startTiming="850" data-stopTiming="1000" data-effect="fadein"></span>
+        </div>
+        <div class="box_n5">
+            <span class="phone" data-startx="73" data-starty="1750" data-stopx="73" data-stopy="1550" data-startTiming="800" data-stopTiming="1100" data-effect="fadein"></span>
+            <span class="score" data-startx="326" data-starty="1250" data-stopx="330" data-stopy="1550" data-startTiming="800" data-stopTiming="1100" data-effect="fadein"></span>
+            <span class="rank" data-startx="760" data-starty="1250" data-stopx="550" data-stopy="1550" data-startTiming="800" data-stopTiming="1100" data-effect="fadein"></span>
+        </div>
+        <div class="box_s5">
+            <span class="phone" data-startx="73" data-starty="2000" data-stopx="73" data-stopy="1800" data-startTiming="1000" data-stopTiming="1400" data-effect="fadein"></span>
+            <span class="score" data-startx="326" data-starty="1500" data-stopx="330" data-stopy="1800" data-startTiming="1000" data-stopTiming="1400" data-effect="fadein"></span>
+            <span class="rank" data-startx="760" data-starty="1500" data-stopx="550" data-stopy="1800" data-startTiming="1000" data-stopTiming="1400" data-effect="fadein"></span>
+        </div>
+        <div class="box_5c">
+            <span class="phone" data-startx="73" data-starty="2250" data-stopx="73" data-stopy="2050" data-startTiming="1200" data-stopTiming="1600" data-effect="fadein"></span>
+            <span class="score" data-startx="326" data-starty="1750" data-stopx="330" data-stopy="2050" data-startTiming="1200" data-stopTiming="1600" data-effect="fadein"></span>
+            <span class="rank" data-startx="760" data-starty="1750" data-stopx="550" data-stopy="2050" data-startTiming="1200" data-stopTiming="1600" data-effect="fadein"></span>
+        </div>
+        <div class="box_z1">
+            <span class="phone" data-startx="60" data-starty="2540" data-stopx="60" data-stopy="2340" data-startTiming="1400" data-stopTiming="1800" data-effect="fadein"></span>
+            <span class="score" data-startx="326" data-starty="2040" data-stopx="330" data-stopy="2340" data-startTiming="1400" data-stopTiming="1800" data-effect="fadein"></span>
+            <span class="rank" data-startx="760" data-starty="2040" data-stopx="550" data-stopy="2340" data-startTiming="1400" data-stopTiming="1800" data-effect="fadein"></span>
+        </div>
+        <div class="box_5s">
+            <span class="phone" data-startx="38" data-starty="2840" data-stopx="38" data-stopy="2610" data-startTiming="1600" data-stopTiming="2000" data-effect="fadein"></span>
+            <span class="score" data-startx="326" data-starty="2340" data-stopx="330" data-stopy="2610" data-startTiming="1600" data-stopTiming="2000" data-effect="fadein"></span>
+            <span class="rank" data-startx="760" data-starty="2340" data-stopx="550" data-stopy="2610" data-startTiming="1600" data-stopTiming="2000" data-effect="fadein"></span>
+        </div>
+        <div class="box_x">
+            <span class="phone" data-startx="45" data-starty="3110" data-stopx="45" data-stopy="2910" data-startTiming="1800" data-stopTiming="2200" data-effect="fadein"></span>
+            <span class="score" data-startx="326" data-starty="2640" data-stopx="330" data-stopy="2910" data-startTiming="1800" data-stopTiming="2200" data-effect="fadein"></span>
+            <span class="rank" data-startx="760" data-starty="2640" data-stopx="550" data-stopy="2910" data-startTiming="1800" data-stopTiming="2200" data-effect="fadein"></span>
+        </div>
+    </div>
+</body>
+<script>
+    (function (D, W, P) {
+
+        var W$ = (function () {
+                    var dom, w$, prefix;
+                    dom = function (argument) {
+                        if (D.querySelectorAll) {
+                            var _dom = D.querySelectorAll(argument);
+                            return _dom;
+                        } else if (D.getElementsByClassName && /\./.test(argument)) {
+                            var classname = argument.replace('.', '');
+                            return D.getElementsByClassName(classname);
+                        } else if (D.getElementById && /#/.test(argument)) {
+                            var id = argument.replace('#', '');
+                            return [D.getElementById(id)];
+                        }
+                    };
+                    w$ = function (argument) {
+                        var _dom = dom(argument) || [];
+                        _dom.__proto__ = w$.fn;
+                        return _dom;
+                    };
+
+                    prefix = (function () {
+                        var style = D.createElement('div').style,
+                                prefixs = ['t', 'webkitT', 'mozT', 'msT'];
+                        for (var i = 0, len = prefixs.length; i < len; i++) {
+                            var at = prefixs[i] + 'ransform';
+                            if (at in style) {
+                                var pf = prefixs[i].substr(0, prefixs[i].length - 1);
+                                return pf ? '-' + pf + '-' : '';
+                            }
+                        }
+                    })();
+
+                    w$.fn = {
+                        data: function (key, value) {
+                            if (value) {
+                                var i = 0,
+                                        len = this.length;
+                                for (; i < len; i++) {
+                                    this[i].setAttribute('data-' + key, value);
+                                }
+                                return this;
+                            } else {
+                                var i = 0,
+                                        len = this.length,
+                                        valueArray = [];
+                                for (; i < len; i++) {
+                                    valueArray.push(this[i].getAttribute('data-' + key) || '');
+                                }
+                                if (valueArray.length > 1) {
+                                    return valueArray;
+                                } else {
+                                    return valueArray[0];
+                                }
+
+                            }
+                        },
+                        setTransform: function (x, y, type) {
+                            if (this.length == 0)return;
+                            var val_3d = 'translate3d(' + x + type + ',' + y + type + ',' + 0 + ')',
+                                    val_2d = 'translate(' + x + type + ',' + y + type + ')',
+                                    _this = this[0];
+                            if (prefix == '-webkit-') {
+                                _this.style.webkitTransform = val_3d;
+                            } else if (prefix == '-moz-') {
+                                _this.style.mozTransform = val_2d;
+                            } else if (prefix == '-o-') {
+                                _this.style.oTransform = val_2d;
+                            } else {
+                                _this.style.transform = val_3d;
+                            }
+                            return this;
+                        },
+                        setTransition: function (attr, time, type) {
+                            if (this.length == 0)return;
+                            var val = attr + ' ' + time + 's ' + (type || 'ease-in'),
+                                    _this = this[0];
+                            if (prefix == '-webkit-') {
+                                _this.style.webkitTransition = attr == 'all' ? val : '-' + prefix + '-' + val;
+                            } else if (prefix == '-moz-') {
+                                _this.style.mozTransition = attr == 'all' ? val : '-' + prefix + '-' + val;
+                            } else if (prefix == '-o-') {
+                                _this.style.oTransition = attr == 'all' ? val : '-' + prefix + '-' + val;
+                            } else {
+                                _this.style.transition = val;
+                            }
+                            return this;
+
+                        },
+                        initElement: function () {
+                            var startX = parseInt(this.data('startx')),//param.startX,
+                                    startY = parseInt(this.data('starty')),//param.startY,
+                                    effect = this.data('effect');//param.effect,
+                            console.log(effect)
+                            if (effect && effect == 'fadein') {//fadein
+                                this[0].style.opacity = 0;
+                            } else if (effect && effect == 'fadeout') {//fadeout
+                                this[0].style.opacity = 1;
+                            }
+                            this.setTransform(startX, startY, 'px');
+                            return this;
+                        },
+                        start: function () {
+                            var startX = parseInt(this.data('startx')),//param.startX,
+                                    startY = parseInt(this.data('starty')),//param.startY,
+                                    startTiming = parseInt(this.data('startTiming')),//param.startTiming,
+                                    stopX = parseInt(this.data('stopx')),//param.stopX,
+                                    stopY = parseInt(this.data('stopy')),//param.stopY,
+                                    stopTiming = parseInt(this.data('stopTiming')),//param.stopTiming,
+                                    effect = this.data('effect'),//param.effect,
+                                    moveX,
+                                    moveY,
+                                    dictX = stopX - startX,
+                                    dictY = stopY - startY,
+                                    $this = this;
+
+                            D.addEventListener('scroll', function () {
+                                var scrollTop = D.body.scrollTop,
+                                        dictPercent = (scrollTop - startTiming) / (stopTiming - startTiming);
+
+                                if (dictX) {
+                                    moveX = dictX * dictPercent + startX;
+                                } else {
+                                    moveX = 0 + startX;
+                                }
+
+                                if (dictY) {
+                                    moveY = dictY * dictPercent + startY;
+                                } else {
+                                    moveY = 0 + startY;
+                                }
+
+                                if (scrollTop > startTiming && scrollTop < stopTiming) {
+                                    if (effect && effect == 'fadein') {//fadein
+                                        $this[0].style.opacity = Math.abs(dictPercent) > 1 ? 1 : Math.abs(dictPercent);
+                                    } else if (effect && effect == 'fadeout') {//fadeout
+                                        $this[0].style.opacity = (1 - dictPercent) < 0 ? 0 : 1 - dictPercent;
+                                    }
+                                    $this.setTransform(moveX, moveY, 'px');
+                                } else if (scrollTop < startTiming || scrollTop == 0) {
+                                    if (effect && effect == 'fadein') {//fadein
+                                        $this[0].style.opacity = 0;
+                                    } else if (effect && effect == 'fadeout') {//fadeout
+                                        $this[0].style.opacity = 1;
+                                    }
+                                    $this.setTransform(startX, startY, 'px');
+                                } else if (scrollTop > stopTiming) {
+                                    if (effect && effect == 'fadein') {//fadein
+                                        $this[0].style.opacity = 1;
+                                    } else if (effect && effect == 'fadeout') {//fadeout
+                                        $this[0].style.opacity = 0;
+                                    }
+                                    $this.setTransform(stopX, stopY, 'px');
+                                }
+
+                            });
+
+                            return this;
+                        }
+                    }
+
+                    return w$;
+                })(),
+            parallax = {
+                    init: function (elementArray) {
+                        var i = 0,
+                                len = elementArray.length;
+                        for (; i < len; i++) {
+                            elementArray[i].initElement().start();
+                        }
+                    }
+                };
+        P.W$ = W$;
+        P.init = parallax.init;
+
+
+    })(document, window, window.wParallax = window.wParallax || {});
+
+    (function(){
+        var    W$ = window.wParallax.W$,
+               parallax = window.wParallax,
+                b4s_phone = W$('.box_4s .phone'),
+                b4s_score = W$('.box_4s .score'),
+                b4s_rank = W$('.box_4s .rank'),
+                bone_phone = W$('.box_one .phone'),
+                bone_score = W$('.box_one .score'),
+                bone_rank = W$('.box_one .rank'),
+                bmz_phone = W$('.box_mz .phone'),
+                bmz_score = W$('.box_mz .score'),
+                bmz_rank = W$('.box_mz .rank'),
+                bmi_phone = W$('.box_mi .phone'),
+                bmi_score = W$('.box_mi .score'),
+                bmi_rank = W$('.box_mi .rank'),
+                bn5_phone = W$('.box_n5 .phone'),
+                bn5_score = W$('.box_n5 .score'),
+                bn5_rank = W$('.box_n5 .rank'),
+                bs5_phone = W$('.box_s5 .phone'),
+                bs5_score = W$('.box_s5 .score'),
+                bs5_rank = W$('.box_s5 .rank'),
+                b5c_phone = W$('.box_5c .phone'),
+                b5c_score = W$('.box_5c .score'),
+                b5c_rank = W$('.box_5c .rank'),
+                bz1_phone = W$('.box_z1 .phone'),
+                bz1_score = W$('.box_z1 .score'),
+                bz1_rank = W$('.box_z1 .rank'),
+                b5s_phone = W$('.box_5s .phone'),
+                b5s_score = W$('.box_5s .score'),
+                b5s_rank = W$('.box_5s .rank'),
+                bx_phone = W$('.box_x .phone'),
+                bx_score = W$('.box_x .score'),
+                bx_rank = W$('.box_x .rank');
+
+        parallax.init([b4s_phone,b4s_score,b4s_rank,
+            bone_phone,bone_score,bone_rank,
+            bmz_phone,
+            bmz_rank,
+            bmz_score,
+            bmi_phone,
+            bmi_rank,
+            bmi_score,
+            bn5_phone,
+            bn5_rank,
+            bn5_score,
+            bs5_phone,
+            bs5_score,
+            bs5_rank,
+            b5c_phone,
+            b5c_rank,
+            b5c_score,
+            bz1_phone,
+            bz1_rank,
+            bz1_score,
+            b5s_phone,
+            b5s_rank,
+            b5s_score,
+            bx_phone,
+            bx_rank,
+            bx_score
+        ]);
+    })();
+</script>
+</html>
