@@ -199,6 +199,7 @@
 
 </style>
 <body>
+<div id="m1"></div>
     <div class="parallax_main">
         <div class="box_4s">
             <span class="phone" data-startx="95" data-starty="770" data-stopx="95" data-stopy="570" data-startTiming="0" data-stopTiming="150" data-effect="fadein"></span>
@@ -258,16 +259,59 @@
         var W$ = (function () {
                     var dom, w$, prefix;
                     dom = function (argument) {
-                        if (D.querySelectorAll) {
+                        if (!D.querySelectorAll) {
                             var _dom = D.querySelectorAll(argument);
                             return _dom;
-                        } else if (D.getElementsByClassName && /\./.test(argument)) {
-                            var classname = argument.replace('.', '');
-                            return D.getElementsByClassName(classname);
-                        } else if (D.getElementById && /#/.test(argument)) {
-                            var id = argument.replace('#', '');
-                            return [D.getElementById(id)];
+                        } else{
+                            var arg_array = argument.split(' '),
+                                parent = [D],
+                                result = [];
+
+                            for(var i= 0,len=arg_array.length;i<len;i++){
+                                parent = queryDom(arg_array[i],parent);
+                                result = parent;
+                            }
+
+                            function queryDom(domstr,parent){
+                                var i = 0,
+                                    len = parent.length,
+                                    result = [];
+
+                                for (; i < len; i++) {
+                                    if (domstr.indexOf('#') == 0) {
+                                        var str = domstr.replace('#', '');
+                                        result.push(parent[i].getElementById(str));
+                                    }
+                                    if (domstr.indexOf('.') == 0) {
+                                        var str = domstr.replace('.', ''),
+                                            HTMLCollection = parent[i].getElementsByClassName(str);
+                                        for(var _i = 0,_len =HTMLCollection.length;_i<_len;_i++){
+
+                                            result.push(HTMLCollection[_i]);
+                                        }
+                                    }
+                                    if (domstr.indexOf('.') == -1 && domstr.indexOf('#') == -1) {
+                                        var str = domstr,
+                                                HTMLCollection  = parent[i].getElementsByTagName(str);
+                                        for(var _i = 0,_len =HTMLCollection.length;_i<_len;_i++){
+                                            result.push(HTMLCollection[_i]);
+                                        }
+                                    }
+                                }
+                                return result;
+                            }
+
+                            return result;
                         }
+
+
+//                        else if (D.getElementsByClassName && /\./.test(argument)) {
+//                            var classname = argument.replace('.', '');
+//                            return D.getElementsByClassName(classname);
+//                        } else if (D.getElementById && /#/.test(argument)) {
+//                            var id = argument.replace('#', '');
+//                            return [D.getElementById(id)];
+//                        }
                     };
                     w$ = function (argument) {
                         var _dom = dom(argument) || [];
@@ -347,7 +391,7 @@
                             var startX = parseInt(this.data('startx')),//param.startX,
                                     startY = parseInt(this.data('starty')),//param.startY,
                                     effect = this.data('effect');//param.effect,
-                            console.log(effect)
+
                             if (effect && effect == 'fadein') {//fadein
                                 this[0].style.opacity = 0;
                             } else if (effect && effect == 'fadeout') {//fadeout
