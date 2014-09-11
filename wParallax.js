@@ -104,11 +104,12 @@
                         return this;
                     } else {
                         var i = 0,
-                            len = this.length,
+                            len = this.length || 1,
                             valueArray = [];
                         for (; i < len; i++) {
                             valueArray.push(this[i].getAttribute('data-' + key) || '');
                         }
+
                         if (valueArray.length > 1) {
                             return valueArray;
                         } else {
@@ -118,33 +119,59 @@
                     }
                 },
                 //设置transform
-                setTransform: function (x, y, type) {
-                    if (this.length == 0)return;
-                    var val_3d = 'translate3d(' + x + type + ',' + y + type + ',' + 0 + ')',
-                        val_2d = 'translate(' + x + type + ',' + y + type + ')',
-                        _this = this[0];
-                    if (prefix == '-webkit-') {
+                setTransform: function (param) {
+
+                    var translate = param.translate,
+                        scale = param.scale,
+                        rerate = param.rerate,
+                        translateX = param.tx || 0,
+                        translateY = param.ty || 0,
+                        translateZ = param.tz || 0,
+                        scaleX = param.sx || 0,
+                        scaleY = param.sy || 0,
+                        scaleZ = param.sz || 0,
+                        rerateX = param.rx || 0,
+                        rerateY = param.ry || 0,
+                        rerateZ = param.rz || 0,
+                        unit = param.unit,
+                        val_3d = '',
+                        val_2d = '',
+                        _this = this.length === 0?this:this[0];
+                    if(!!translate){
+                        val_3d+='translate3d(' + translateX + unit + ',' + translateY + unit + ',' + translateZ + ') ';
+                        val_2d+='translate(' + translateX + unit + ',' + translateY + unit + ') ';
+                    }
+                    if(!!scale){
+                        val_3d += 'scale3d(' + scaleX  + ',' + scaleY  + ',' + scaleZ + ') ',
+                        val_2d += 'scale(' + scaleX + ',' + scaleY + ') ';
+                    }
+                    if(!!rerate){
+                        val_3d += 'rerate3d(' + rerateX + unit + ',' + rerateY + unit + ',' + rerateZ + ') ',
+                        val_2d += 'rerate(' + rerateX + unit + ',' + rerateY + unit + ') ';
+                    }
+
+                    if (prefix === '-webkit-') {
                         _this.style.webkitTransform = val_3d;
-                    } else if (prefix == '-moz-') {
-                        _this.style.mozTransform = val_2d;
-                    } else if (prefix == '-o-') {
-                        _this.style.oTransform = val_2d;
+                    } else if (prefix === '-moz-') {
+                        _this.style.mozTransform = val_3d;
+                    } else if (prefix === '-ms-') {
+                        _this.style.msTransform = val_2d;
                     } else {
                         _this.style.transform = val_3d;
                     }
                     return this;
                 },
                 //设置transition
-                setTransition: function (attr, time, type) {
+                setTransition: function (attr, time, type,delay) {
                     if (this.length == 0)return;
-                    var val = attr + ' ' + time + 's ' + (type || 'ease-out'),
+                    var val = attr + ' ' + time + ' ' + (type || 'ease-out')+ ' ' + delay,
                         _this = this[0];
                     if (prefix == '-webkit-') {
                         _this.style.webkitTransition = attr == 'all' ? val : '-' + prefix + '-' + val;
                     } else if (prefix == '-moz-') {
                         _this.style.mozTransition = attr == 'all' ? val : '-' + prefix + '-' + val;
-                    } else if (prefix == '-o-') {
-                        _this.style.oTransition = attr == 'all' ? val : '-' + prefix + '-' + val;
+                    } else if (prefix == '-ms-') {
+                        _this.style.msTransition = attr == 'all' ? val : '-' + prefix + '-' + val;
                     } else {
                         _this.style.transition = val;
                     }
@@ -153,54 +180,135 @@
                 },
                 //初始化wparallax的元件对象,必须要初始化之后才能执行start方法加载动画
                 initElement: function () {
-                    var startX = parseInt(this.data('startx')),//param.startX,
-                        startY = parseInt(this.data('starty')),//param.startY,
+                    var startCoord = this.data('startCoord'),
+                        scaleStart = this.data('scaleStart'),
+                        rerateStart = this.data('rerateStart'),
+                        startX = startCoord?parseInt((startCoord.split(','))[0]):0,
+                        startY = startCoord?parseInt((startCoord.split(','))[1]):0,
+                        startZ = startCoord?parseInt((startCoord.split(','))[2]):0,
+                        scaleStartX = scaleStart?parseInt((scaleStart.split(','))[0]): 0,
+                        scaleStartY = scaleStart?parseInt((scaleStart.split(','))[1]): 0,
+                        scaleStartZ = scaleStart?parseInt((scaleStart.split(','))[2]): 0,
+                        rerateStartX = rerateStart?parseInt((rerateStart.split(','))[0]): 0,
+                        rerateStartY = rerateStart?parseInt((rerateStart.split(','))[1]): 0,
+                        rerateStartZ = rerateStart?parseInt((rerateStart.split(','))[2]): 0,
                         effect = this.data('effect');//param.effect,
 
-                    if (effect && effect == 'fadein') {//fadein
+                    if (!!effect && effect == 'fadein') {//fadein
                         this[0].style.opacity = 0;
                     } else if (effect && effect == 'fadeout') {//fadeout
                         this[0].style.opacity = 1;
                     }
-                    this.setTransform(startX, startY, 'px');
+
+                    this.setTransform({
+                        translate:startCoord,
+                        scale:scaleStart,
+                        rerate:rerateStart,
+                        tx:startX,
+                        ty:startY,
+                        tz:startZ,
+                        sx:scaleStartX,
+                        sy:scaleStartY,
+                        sz:scaleStartZ,
+                        rx:rerateStartX,
+                        ry:rerateStartY,
+                        rz:rerateStartZ,
+                        unit:'px'
+                    });
+
                     return this;
                 },
                 //wparallax核心方法，加载动画,参数mode模式：模式有两种 scroll滚动 和 scene场景
                 start: function (mode) { //mode:模式有两种 scroll滚动 和 scene场景
-                    var startX = parseInt(this.data('startx') || 0),//param.startX,
-                        startY = parseInt(this.data('starty') || 0),//param.startY,
-                        startTiming = parseInt(this.data('startTiming') || 0),//param.startTiming,
-                        stopX = parseInt(this.data('stopx') || 0),//param.stopX,
-                        stopY = parseInt(this.data('stopy') || 0),//param.stopY,
-                        stopTiming = parseInt(this.data('stopTiming') || 0),//param.stopTiming,
+                    var startCoord = this.data('startCoord'),
+                        stopCoord = this.data('stopCoord'),
+                        startX = startCoord?parseInt((startCoord.split(','))[0]):0,
+                        startY = startCoord?parseInt((startCoord.split(','))[1]):0,
+                        startZ = startCoord?parseInt((startCoord.split(','))[2]):0,
+                        startTiming = parseInt(this.data('startTiming') || 0),
+
+                        stopX = stopCoord?parseInt((stopCoord.split(','))[0]):0,
+                        stopY = stopCoord?parseInt((stopCoord.split(','))[1]):0,
+                        stopZ = stopCoord?parseInt((stopCoord.split(','))[2]):0,
+                        stopTiming = parseInt(this.data('stopTiming') || 0),
+
                         sceneStartTiming = parseInt(this.data('sceneStartTiming') || 0),
-                        sceneDuration = parseInt(this.data('sceneDuration') || '0s'),
+                        sceneDuration = this.data('sceneDuration') || '0s',
+                        timingFunction = this.data('timingFunction') || 'ease-out',
+                        delay = this.data('delay') || '0s',
                         effect = this.data('effect')||'',//param.effect,
+
+                        scaleStart = this.data('scaleStart'),
+                        scaleStop = this.data('scaleStop'),
+                        scaleStartX = scaleStart?parseInt((scaleStart.split(','))[0]): 0,
+                        scaleStartY = scaleStart?parseInt((scaleStart.split(','))[1]): 0,
+                        scaleStartZ = scaleStart?parseInt((scaleStart.split(','))[2]): 0,
+                        scaleStopX = scaleStop?parseInt((scaleStop.split(','))[0]): 0,
+                        scaleStopY = scaleStop?parseInt((scaleStop.split(','))[1]): 0,
+                        scaleStopZ = scaleStop?parseInt((scaleStop.split(','))[2]): 0,
+
+                        rerateStart = this.data('rerateStart'),
+                        rerateStartX = rerateStart?parseInt((rerateStart.split(','))[0]): 0,
+                        rerateStartY = rerateStart?parseInt((rerateStart.split(','))[1]): 0,
+                        rerateStartZ = rerateStart?parseInt((rerateStart.split(','))[2]): 0,
+                        rerateStop = this.data('rerateStart'),
+                        rerateStopX = rerateStop?parseInt((rerateStop.split(','))[0]): 0,
+                        rerateStopY = rerateStop?parseInt((rerateStop.split(','))[1]): 0,
+                        rerateStopZ = rerateStop?parseInt((rerateStop.split(','))[2]): 0,
+
                         moveX,
                         moveY,
+                        moveZ,
                         dictX = stopX - startX,
                         dictY = stopY - startY,
+                        dictZ = stopZ - startZ,
                         $this = this;
-
                     //firstScene 第一个场景自动播放
                     if(mode === 'scene' && sceneStartTiming === 0){
                         setTimeout(function(){
-                            $this.setTransition('all',sceneDuration);
-                            $this.setTransform(stopX, stopY, 'px');
+                            $this.setTransition('all',sceneDuration,timingFunction,delay);
+
+                            $this.setTransform({
+                                translate:startCoord,
+                                scale:scaleStart,
+                                rerate:rerateStart,
+                                tx:stopX,
+                                ty:stopY,
+                                tz:stopZ,
+                                sx:scaleStopX,
+                                sy:scaleStopY,
+                                sz:scaleStopZ,
+                                rx:rerateStopX,
+                                ry:rerateStopY,
+                                rz:rerateStopZ,
+                                unit:'px'
+                            });
                             $this[0].style.opacity = 1;
                         },100);
-
                     }
 
                     D.addEventListener('scroll', function () {
-                        var scrollTop = D.body.scrollTop,
+                        var scrollTop = D.body.scrollTop || D.documentElement.scrollTop,
                             dictPercent = (scrollTop - startTiming) / (stopTiming - startTiming);
-
                         switch (mode){
                             case 'scene':
                                 if(scrollTop >= sceneStartTiming && sceneStartTiming > 0){
-                                    $this.setTransition('all',sceneDuration);
-                                    $this.setTransform(stopX, stopY, 'px');
+                                    $this.setTransition('all',sceneDuration,timingFunction,delay);
+                                    $this.setTransform({
+                                        translate:startCoord,
+                                        scale:scaleStart,
+                                        rerate:rerateStart,
+                                        tx:stopX,
+                                        ty:stopY,
+                                        tz:stopZ,
+                                        sx:scaleStopX,
+                                        sy:scaleStopY,
+                                        sz:scaleStopZ,
+                                        rx:rerateStopX,
+                                        ry:rerateStopY,
+                                        rz:rerateStopZ,
+                                        unit:'px'
+                                    });
                                     $this[0].style.opacity = 1;
                                 }
                                 break;
@@ -223,21 +331,39 @@
                                     } else if (effect && effect == 'fadeout') {//fadeout
                                         $this[0].style.opacity = (1 - dictPercent) < 0 ? 0 : 1 - dictPercent;
                                     }
-                                    $this.setTransform(moveX, moveY, 'px');
+                                    $this.setTransform({
+                                        attr:'translate',
+                                        x:moveX,
+                                        y:moveY,
+                                        z:moveZ,
+                                        unit:'px'
+                                    });
                                 } else if (scrollTop < startTiming || scrollTop == 0) {
                                     if (effect && effect == 'fadein') {//fadein
                                         $this[0].style.opacity = 0;
                                     } else if (effect && effect == 'fadeout') {//fadeout
                                         $this[0].style.opacity = 1;
                                     }
-                                    $this.setTransform(startX, startY, 'px');
+                                    $this.setTransform({
+                                        attr:'translate',
+                                        x:startX,
+                                        y:startY,
+                                        z:startZ,
+                                        unit:'px'
+                                    });
                                 } else if (scrollTop > stopTiming) {
                                     if (effect && effect == 'fadein') {//fadein
                                         $this[0].style.opacity = 1;
                                     } else if (effect && effect == 'fadeout') {//fadeout
                                         $this[0].style.opacity = 0;
                                     }
-                                    $this.setTransform(stopX, stopY, 'px');
+                                    $this.setTransform({
+                                        attr:'translate',
+                                        x:stopX,
+                                        y:stopY,
+                                        z:stopZ,
+                                        unit:'px'
+                                    });
                                 }
                                 break;
                         }
@@ -254,6 +380,9 @@
     //初始化整个滚动动画，传入场景模式（字符串：scene || scroll），elementArray为 W$('.class')的数组
         parallax = {
             init: function (scene,elementArray) {
+                if(!{}.__proto__){
+                    return;
+                }
                 var i = 0,
                     len = elementArray.length;
                 for (; i < len; i++) {
