@@ -7,17 +7,21 @@ javascript-parallax
 
 /**
  * wParallax
- * Ver 1.2.0
+ * Ver 0.0.1
  * Dev Mr.Wong
  *
  * 使用示例：
  *
- * <span class="phone" data-startx="95" data-starty="770" data-stopx="95" data-stopy="570" data-startTiming="0" data-stopTiming="150" data-effect="fadein" data-sceneStartTiming="0" data-sceneDuration="1s"></span>
+ * \<span class="phone" data-startCoord="95,770" data-stopCoord="95,570" data-startTiming="0" data-stopTiming="150" data-effect="fadein" data-sceneStartTiming="0" data-sceneDuration="1s"\>\<\/span\>
  *
- * data-startx 元件初始X轴位置
- * data-starty 元件初始Y轴位置
- * data-stopx  元件运动终点X轴位置
- * data-stopy  元件运动终点y轴位置
+ * data-startCoord="x,y,z" translate起点坐标
+ * data-stopCoord="x,y,z" translate终点坐标
+ *
+ * data-scaleStart="x,y,z" scale起点比例
+ * data-scaleStop="x,y,z" scale终点比例
+ *
+ * data-rerateStart="x,y,z" rerate起点角度
+ * data-rerateStop="x,y,z" rerate终点角度
  *
  * data-startTiming 元件开始动画的scroll点 （scene模式下可以不用设置）
  * data-stopTiming  元件结束动画的scroll点 （scene模式下可以不用设置）
